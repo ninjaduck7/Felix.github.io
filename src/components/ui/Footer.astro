@@ -1,0 +1,11 @@
+---
+import { profile } from '@/settings'
+---
+
+<footer class='mt-20 flex flex-col gap-3 border-t border-base-300 py-8 text-sm text-base-content/65 sm:flex-row sm:items-center sm:justify-between'>
+	<p>&copy; {new Date().getFullYear()} {profile.fullName}</p>
+	<p>
+		Built with{' '}<a href='https://astro.build' class='font-medium text-base-content hover:text-primary' target='_blank' rel='noreferrer'>Astro</a>{' '}
+		from the{' '}<a href='https://github.com/maiobarbero/astro_academia' class='font-medium text-base-content hover:text-primary' target='_blank' rel='noreferrer'>Astro Academia</a>{' '}baseline.
+	</p>
+</footer>

@@ -1,0 +1,71 @@
+---
+import ProfilePicture from '@/assets/profile-picture.png'
+import Hero from '@/components/ui/Hero.astro'
+import Layout from '@/layouts/Layout.astro'
+import { profile } from '@/settings'
+import { projects } from '@/data/projects'
+import { withBase } from '@/lib/paths'
+---
+
+<Layout>
+	<section class='border-b border-base-300 pb-14'>
+		<Hero {...profile} profilePicture={ProfilePicture} />
+	</section>
+
+	<section class='py-14' aria-labelledby='focus-heading'>
+		<div class='mb-9 max-w-2xl'>
+			<p class='section-kicker mb-3'>Research focus</p>
+			<h2 id='focus-heading' class='font-serif text-3xl font-bold'>Questions across physics, algorithms, and systems</h2>
+		</div>
+		<div class='grid gap-px overflow-hidden rounded-md border border-base-300 bg-base-300 sm:grid-cols-2'>
+			{profile.research_areas.map((area, index) => (
+				<article class='min-h-52 bg-base-100 p-6 sm:p-8'>
+					<p class='font-mono text-xs font-bold text-primary'>0{index + 1}</p>
+					<h3 class='mt-5 font-serif text-xl font-bold'>{area.title}</h3>
+					<p class='mt-3 leading-7 text-base-content/75'>{area.description}</p>
+				</article>
+			))}
+		</div>
+	</section>
+
+	<section class='border-y border-base-300 py-14' aria-labelledby='projects-heading'>
+		<div class='mb-9 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between'>
+			<div>
+				<p class='section-kicker mb-3'>Open source</p>
+				<h2 id='projects-heading' class='font-serif text-3xl font-bold'>Selected projects</h2>
+			</div>
+			<a href={withBase('/projects')} class='link font-medium text-primary'>View all projects</a>
+		</div>
+		<div class='divide-y divide-base-300'>
+			{projects.slice(0, 3).map((project) => (
+				<article class='grid gap-4 py-7 first:pt-0 last:pb-0 md:grid-cols-[minmax(0,1fr)_11rem]'>
+					<div>
+						<h3 class='font-serif text-xl font-bold'>
+							<a href={project.href} target='_blank' rel='noreferrer' class='hover:text-primary'>{project.name}</a>
+						</h3>
+						<p class='mt-2 max-w-3xl leading-7 text-base-content/75'>{project.description}</p>
+					</div>
+					<p class='font-mono text-xs text-base-content/60 md:text-right'>{project.language}</p>
+				</article>
+			))}
+		</div>
+	</section>
+
+	<section class='grid gap-10 py-14 md:grid-cols-[minmax(0,1fr)_minmax(15rem,0.55fr)] md:items-start'>
+		<div>
+			<p class='section-kicker mb-3'>Working principles</p>
+			<h2 class='font-serif text-3xl font-bold'>Reproducible by construction</h2>
+			<p class='mt-5 max-w-2xl text-lg leading-8 text-base-content/75'>
+				I treat correctness, shared evaluation inputs, and durable evidence as part of the research result. Performance numbers stay scoped to their hardware, software environment, and measurement protocol.
+			</p>
+		</div>
+		<div class='border-l-2 border-secondary pl-6'>
+			<p class='font-serif text-xl font-bold'>Current themes</p>
+			<ul class='mt-4 space-y-3 text-base-content/75'>
+				<li>Quantum-inspired methods for discrete optimization</li>
+				<li>Diffusion processes for modeling and sampling</li>
+				<li>Learning methods for operations research</li>
+			</ul>
+		</div>
+	</section>
+</Layout>

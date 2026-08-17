@@ -1,0 +1,40 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import { publications } from '@/data/cv'
+import { highlightAuthor } from '@/lib/utils'
+---
+
+<Layout title='Publications | Yufei Zhang' description='Verified publication list for Yufei Zhang.'>
+	<header class='max-w-3xl border-b border-base-300 pb-10'>
+		<p class='section-kicker mb-4'>Academic output</p>
+		<h1 class='font-serif text-4xl font-bold sm:text-5xl'>Publications</h1>
+		<p class='mt-6 text-lg leading-8 text-base-content/75'>
+			Only publications with verified titles, author order, venues, dates, and links will appear here.
+		</p>
+	</header>
+
+	{publications.length > 0 ? (
+		<ol class='divide-y divide-base-300'>
+			{publications.map((paper, index) => (
+				<li class='grid gap-5 py-9 md:grid-cols-[3rem_minmax(0,1fr)]'>
+					<p class='font-mono text-xs font-bold text-primary'>{String(index + 1).padStart(2, '0')}</p>
+					<article>
+						<h2 class='font-serif text-2xl font-bold'>
+							{paper.link ? <a href={paper.link} target='_blank' rel='noreferrer' class='hover:text-primary'>{paper.title}</a> : paper.title}
+						</h2>
+						<p class='mt-3' set:html={highlightAuthor(paper.authors)} />
+						<p class='mt-2 text-sm text-base-content/65'>{paper.journal} / {paper.time}</p>
+						{paper.abstract && <p class='mt-5 leading-7 text-base-content/75'>{paper.abstract}</p>}
+					</article>
+				</li>
+			))}
+		</ol>
+	) : (
+		<section class='my-12 border-l-2 border-accent py-2 pl-6'>
+			<h2 class='font-serif text-2xl font-bold'>Details pending verification</h2>
+			<p class='mt-3 max-w-2xl leading-7 text-base-content/75'>
+				TODO: add publication records after confirming the bibliographic metadata and canonical URLs. No placeholder papers are shown.
+			</p>
+		</section>
+	)}
+</Layout>

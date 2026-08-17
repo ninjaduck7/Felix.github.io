@@ -1,0 +1,38 @@
+---
+import { template } from '@/settings'
+---
+
+<label class='btn btn-square btn-ghost btn-sm swap swap-rotate' title='Toggle color theme'>
+	<input
+		type='checkbox'
+		class='theme-controller'
+		value={template.darkTheme}
+		data-light-theme={template.lightTheme}
+		data-dark-theme={template.darkTheme}
+		aria-label='Toggle dark mode'
+	/>
+	<svg class='swap-off size-5 fill-current' viewBox='0 0 24 24' aria-hidden='true'>
+		<path d='M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12Zm0-16h1v3h-2V2h1Zm0 17h1v3h-2v-3ZM2 11h3v2H2v-2Zm17 0h3v2h-3v-2ZM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42-2.12-2.12Zm12.02 12.02 1.42-1.42 2.12 2.12-1.42 1.42-2.12-2.12ZM18.36 4.22l1.42 1.42-2.12 2.12-1.42-1.42 2.12-2.12ZM6.34 16.24l1.42 1.42-2.12 2.12-1.42-1.42 2.12-2.12Z'></path>
+	</svg>
+	<svg class='swap-on size-5 fill-current' viewBox='0 0 24 24' aria-hidden='true'>
+		<path d='M21.64 13.13A9 9 0 1 1 10.87 2.36 7 7 0 0 0 21.64 13.13Z'></path>
+	</svg>
+</label>
+
+<script>
+	function syncThemeToggle() {
+		document.querySelectorAll<HTMLInputElement>('.theme-controller').forEach((input) => {
+			const light = input.dataset.lightTheme || 'light'
+			const dark = input.dataset.darkTheme || 'dark'
+			input.checked = document.documentElement.dataset.theme === dark
+			input.addEventListener('change', () => {
+				const theme = input.checked ? dark : light
+				document.documentElement.dataset.theme = theme
+				localStorage.setItem('theme', theme)
+			})
+		})
+	}
+
+	syncThemeToggle()
+	document.addEventListener('astro:page-load', syncThemeToggle)
+</script>

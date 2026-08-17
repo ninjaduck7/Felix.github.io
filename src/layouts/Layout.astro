@@ -1,0 +1,74 @@
+---
+import { ClientRouter } from 'astro:transitions'
+import DarkLightController from '@/components/ui/DarkLightController.astro'
+import Footer from '@/components/ui/Footer.astro'
+import Navbar from '@/components/ui/Navbar.astro'
+import Head from '@/components/Head.astro'
+import { profile, seo, template } from '@/settings'
+import '@/styles/global.css'
+
+interface Props {
+	title?: string
+	description?: string
+	image?: string
+}
+
+const {
+	title = seo.default_title,
+	description = seo.default_description,
+	image = seo.default_image,
+} = Astro.props
+---
+
+<!doctype html>
+<html lang='en' data-theme={template.lightTheme}>
+	<head>
+		{template.transitions && <ClientRouter />}
+		<Head title={title} description={description} image={image} />
+	</head>
+	<body class='bg-base-100 text-base-content antialiased'>
+		<a
+			href='#main-content'
+			class='btn btn-primary fixed left-3 top-3 z-[100] -translate-y-24 focus:translate-y-0'
+		>
+			Skip to content
+		</a>
+		<div class={`drawer lg:drawer-open ${template.menu_left ? 'drawer-end' : ''}`}>
+			<input id='site-drawer' type='checkbox' class='drawer-toggle' />
+			<div class='drawer-content min-h-screen bg-base-100'>
+				<header class='sticky top-0 z-30 border-b border-base-300 bg-base-100/95 backdrop-blur lg:hidden'>
+					<nav class='navbar min-h-16 px-4' aria-label='Mobile navigation controls'>
+						<div class='navbar-start'>
+							<label
+								for='site-drawer'
+								class='btn btn-square btn-ghost'
+								aria-label='Open navigation menu'
+								title='Open menu'
+							>
+								<svg viewBox='0 0 24 24' class='size-6' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'>
+									<path stroke-linecap='round' d='M4 6h16M4 12h16M4 18h16'></path>
+								</svg>
+							</label>
+						</div>
+						<a href={`${template.base}/`} class='navbar-center font-serif text-lg font-bold'>
+							{profile.fullName}
+						</a>
+						<div class='navbar-end'>
+							<DarkLightController />
+						</div>
+					</nav>
+				</header>
+				<main id='main-content' class='mx-auto flex min-h-screen w-full max-w-6xl flex-col px-5 pb-0 pt-10 sm:px-8 lg:px-12 lg:pt-16'>
+					<div class='flex-1'>
+						<slot />
+					</div>
+					<Footer />
+				</main>
+			</div>
+			<div class='drawer-side z-50 lg:z-20'>
+				<label for='site-drawer' aria-label='Close navigation menu' class='drawer-overlay'></label>
+				<Navbar />
+			</div>
+		</div>
+	</body>
+</html>

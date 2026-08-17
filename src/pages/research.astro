@@ -1,0 +1,47 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import { profile } from '@/settings'
+---
+
+<Layout
+	title='Research | Yufei Zhang'
+	description='Research interests of Yufei Zhang in quantum-inspired algorithms, combinatorial optimization, diffusion stochastic processes, and learning-based operations research.'
+>
+	<header class='max-w-3xl border-b border-base-300 pb-10'>
+		<p class='section-kicker mb-4'>Research</p>
+		<h1 class='font-serif text-4xl font-bold sm:text-5xl'>Algorithms grounded in careful evidence</h1>
+		<p class='mt-6 text-lg leading-8 text-base-content/75'>
+			My interests connect computational physics, optimization, and high-performance systems. I focus on formulations that can be audited end to end: from mathematical objective and implementation to baseline, measurement, and interpretation.
+		</p>
+	</header>
+
+	<section class='py-12' aria-labelledby='areas-heading'>
+		<h2 id='areas-heading' class='font-serif text-3xl font-bold'>Research areas</h2>
+		<div class='mt-8 divide-y divide-base-300 border-y border-base-300'>
+			{profile.research_areas.map((area, index) => (
+				<article class='grid gap-4 py-8 md:grid-cols-[4rem_14rem_minmax(0,1fr)]'>
+					<p class='font-mono text-xs font-bold text-primary'>0{index + 1}</p>
+					<h3 class='font-serif text-xl font-bold'>{area.title}</h3>
+					<p class='leading-7 text-base-content/75'>{area.description}</p>
+				</article>
+			))}
+		</div>
+	</section>
+
+	<section class='grid gap-8 border-t border-base-300 py-12 md:grid-cols-2'>
+		<div>
+			<p class='section-kicker mb-3'>Method</p>
+			<h2 class='font-serif text-2xl font-bold'>Correctness before comparison</h2>
+			<p class='mt-4 leading-7 text-base-content/75'>
+				Changed and reference implementations should see identical inputs. Numerical tolerance, compilation boundaries, warmup, timing, and hardware context belong beside every reported result.
+			</p>
+		</div>
+		<div>
+			<p class='section-kicker mb-3'>Interpretation</p>
+			<h2 class='font-serif text-2xl font-bold'>Claims match the evidence</h2>
+			<p class='mt-4 leading-7 text-base-content/75'>
+				Solver time is not end-to-end system latency, and a strong optimization module is not automatically a state-of-the-art tracking pipeline. I keep those boundaries explicit.
+			</p>
+		</div>
+	</section>
+</Layout>

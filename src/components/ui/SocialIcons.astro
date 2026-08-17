@@ -1,0 +1,39 @@
+---
+import Envelope from '@/assets/social-icons/envelope.svg'
+import GitHub from '@/assets/social-icons/github.svg'
+import LinkedIn from '@/assets/social-icons/linkedin-in.svg'
+import Scholar from '@/assets/social-icons/google-scholar.svg'
+import Bluesky from '@/assets/social-icons/bluesky.svg'
+import Orcid from '@/assets/social-icons/orcid.svg'
+import { social } from '@/settings'
+
+const links = [
+	{ key: 'email', label: `Email: ${social.email}`, href: social.email ? `mailto:${social.email}` : '', Icon: Envelope },
+	{
+		key: 'email-secondary',
+		label: `Email: ${social.email_secondary}`,
+		href: social.email_secondary ? `mailto:${social.email_secondary}` : '',
+		Icon: Envelope,
+	},
+	{ key: 'github', label: 'GitHub', href: social.github, Icon: GitHub },
+	{ key: 'linkedin', label: 'LinkedIn', href: social.linkedin, Icon: LinkedIn },
+	{ key: 'scholar', label: 'Google Scholar', href: social.scholar, Icon: Scholar },
+	{ key: 'bluesky', label: 'Bluesky', href: social.bluesky, Icon: Bluesky },
+	{ key: 'orcid', label: 'ORCID', href: social.orcid, Icon: Orcid },
+].filter((item) => item.href)
+---
+
+<div class='flex flex-wrap items-center gap-2' aria-label='Social links'>
+	{links.map(({ label, href, Icon }) => (
+		<a
+			href={href}
+			target={href.startsWith('mailto:') ? undefined : '_blank'}
+			rel={href.startsWith('mailto:') ? undefined : 'noreferrer'}
+			class='btn btn-square btn-ghost btn-sm border border-base-300'
+			aria-label={label}
+			title={label}
+		>
+			<Icon class='size-4 fill-current' />
+		</a>
+	))}
+</div>

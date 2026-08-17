@@ -1,0 +1,71 @@
+---
+import { Image } from 'astro:assets'
+import { getCollection } from 'astro:content'
+import ProfilePicture from '@/assets/profile-picture.png'
+import SocialIcons from '@/components/ui/SocialIcons.astro'
+import DarkLightController from '@/components/ui/DarkLightController.astro'
+import { profile } from '@/settings'
+import { withBase } from '@/lib/paths'
+
+const isBlogPopulated = await getCollection('blog', ({ data }) => !data.draft).then((collection) => collection.length > 0)
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/'
+const navItems = [
+	{ label: 'Home', path: '/' },
+	{ label: 'Research', path: '/research' },
+	{ label: 'Publications', path: '/papers' },
+	{ label: 'Projects', path: '/projects' },
+	{ label: 'CV', path: '/cv' },
+	...(isBlogPopulated ? [{ label: 'Notes', path: '/blog/1' }] : []),
+]
+---
+
+<aside class='flex h-screen w-[18rem] flex-col border-r border-base-300 bg-base-200 px-6 py-7 text-base-content'>
+	<div class='flex min-h-0 flex-1 flex-col'>
+		<a href={withBase('/')} class='group block'>
+			<Image
+				class='size-24 rounded-md object-cover ring-1 ring-base-300 transition group-hover:ring-primary'
+				src={ProfilePicture}
+				width={192}
+				height={192}
+				alt={`Portrait of ${profile.fullName}`}
+			/>
+			<p class='mt-5 font-serif text-2xl font-bold leading-tight'>{profile.fullName}</p>
+			<p class='mt-2 text-sm leading-6 text-base-content/70'>{profile.title}</p>
+		</a>
+
+		<nav class='mt-9 min-h-0 overflow-y-auto' aria-label='Primary navigation'>
+			<ul class='menu w-full gap-1 p-0'>
+				{navItems.map((item) => {
+					const href = withBase(item.path)
+					const normalizedHref = href.replace(/\/$/, '')
+					const isActive = item.path === '/'
+						? currentPath === normalizedHref
+						: currentPath.startsWith(normalizedHref)
+
+					return (
+						<li>
+							<a
+								href={href}
+								aria-current={isActive ? 'page' : undefined}
+								class:list={[
+									'rounded px-3 py-2.5 text-[0.95rem] font-medium',
+									isActive ? 'bg-base-300 text-primary' : 'hover:bg-base-300',
+								]}
+							>
+								{item.label}
+							</a>
+						</li>
+					)
+				})}
+			</ul>
+		</nav>
+	</div>
+
+	<div class='border-t border-base-300 pt-5'>
+		<div class='mb-4 flex items-center justify-between'>
+			<span class='font-mono text-xs uppercase text-base-content/60'>Beijing, China</span>
+			<div class='hidden lg:block'><DarkLightController /></div>
+		</div>
+		<SocialIcons />
+	</div>
+</aside>

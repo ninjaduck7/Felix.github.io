@@ -1,0 +1,38 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import { projects } from '@/data/projects'
+---
+
+<Layout
+	title='Projects | Yufei Zhang'
+	description='Open-source physics, quantum computing, mathematics, and software projects by Yufei Zhang.'
+>
+	<header class='max-w-3xl border-b border-base-300 pb-10'>
+		<p class='section-kicker mb-4'>Open source</p>
+		<h1 class='font-serif text-4xl font-bold sm:text-5xl'>Projects</h1>
+		<p class='mt-6 text-lg leading-8 text-base-content/75'>
+			Public work spanning computational physics, group theory, browser tools, and scientific software. Repository descriptions below are drawn from the public project metadata.
+		</p>
+	</header>
+
+	<section class='divide-y divide-base-300' aria-label='Project list'>
+		{projects.map((project, index) => (
+			<article class='grid gap-5 py-9 md:grid-cols-[3rem_minmax(0,1fr)_10rem]'>
+				<p class='font-mono text-xs font-bold text-primary'>0{index + 1}</p>
+				<div>
+					<h2 class='font-serif text-2xl font-bold'>
+						<a href={project.href} target='_blank' rel='noreferrer' class='hover:text-primary'>{project.name}</a>
+					</h2>
+					<p class='mt-3 max-w-3xl leading-7 text-base-content/75'>{project.description}</p>
+					<ul class='mt-5 flex flex-wrap gap-2' aria-label={`Topics for ${project.name}`}>
+						{project.tags.map((tag) => <li class='badge badge-outline rounded'>{tag}</li>)}
+					</ul>
+				</div>
+				<div class='md:text-right'>
+					<p class='font-mono text-xs text-base-content/60'>{project.language}</p>
+					<a href={project.href} target='_blank' rel='noreferrer' class='btn btn-ghost btn-sm mt-4 border border-base-300'>Repository</a>
+				</div>
+			</article>
+		))}
+	</section>
+</Layout>

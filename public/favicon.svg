@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="YZ monogram">
+  <rect width="64" height="64" rx="8" fill="#0f766e"/>
+  <path d="M12 15h9l11 15 11-15h9L36 37v12h-8V37L12 15Z" fill="#fbfcfb"/>
+  <path d="M39 41h13v8H35l4-8Z" fill="#f2c14e"/>
+</svg>
