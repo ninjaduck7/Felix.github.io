@@ -16,7 +16,7 @@ interface PostSummary {
 }
 
 export const getStaticPaths = (async ({ paginate }) => {
-    const blogEntries = await getCollection('blog', ({ data }) => !data.draft && data.locale === 'en');
+    const blogEntries = await getCollection('blog', ({ data }) => !data.draft && data.locale === 'zh');
 
     const posts = blogEntries
         .map(post => ({
@@ -24,7 +24,7 @@ export const getStaticPaths = (async ({ paginate }) => {
             date: post.data.date,
             badge: post.data.tags?.[0],
             excerpt: trimExcerpt(post.data.excerpt),
-            slug: withBase(`/blog/${post.id}`),
+            slug: withBase(`/zh/blog/${post.id.replace(/-zh$/, '')}`),
         }))
         .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
@@ -38,9 +38,9 @@ export const getStaticPaths = (async ({ paginate }) => {
 const { page } = Astro.props as { page: Page<PostSummary> }
 ---
 
-<Layout title='Blog'>
+<Layout title='笔记'>
     <div>
-		<h1 class='text-3xl font-bold mb-8'>Blog Posts</h1>
+		<h1 class='text-3xl font-bold mb-8'>研究笔记</h1>
 		<div class='grid gap-8'>
 			{
 				page.data.map(post => (
@@ -55,7 +55,7 @@ const { page } = Astro.props as { page: Page<PostSummary> }
 								{post.badge && <div class='badge badge-accent badge-outline p-4'>{post.badge}</div>}
 							</div>
 							<time datetime={post.date} class='text-sm text-base-content/71'>
-								{new Date(post.date).toLocaleDateString('en-US', {
+								{new Date(post.date).toLocaleDateString('zh-CN', {
 									year: 'numeric',
 									month: 'long',
 									day: 'numeric',
@@ -67,7 +67,7 @@ const { page } = Astro.props as { page: Page<PostSummary> }
                             href={post.slug}
 									class='btn btn-sm btn-secondary text-secondary-content'
 								>
-									Read More
+									阅读笔记
 								</a>
 							</div>
 						</div>

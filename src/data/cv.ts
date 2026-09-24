@@ -18,6 +18,21 @@ export const education: Education[] = [
 	},
 ]
 
+export const educationZh: Education[] = [
+	{
+		school: '北京理工大学',
+		time: '2025.09 – 至今',
+		degree: '物理学博士研究生',
+		location: '中国·北京',
+	},
+	{
+		school: '西南大学',
+		time: '2021.09 – 2025.06',
+		degree: '物理学学士',
+		location: '中国·重庆',
+	},
+]
+
 export const skills: Skill[] = [
 	{
 		title: 'Scientific computing',
@@ -30,6 +45,21 @@ export const skills: Skill[] = [
 	{
 		title: 'Optimization research',
 		description: 'Quantum-inspired algorithms, combinatorial optimization, diffusion processes, and learning-based operations research.',
+	},
+]
+
+export const skillsZh: Skill[] = [
+	{
+		title: '科学计算',
+		description: 'Python、Jupyter、数值实验与可复现性评估。',
+	},
+	{
+		title: 'GPU 编程',
+		description: 'CUDA、Triton、TileLang、性能分析与正确性优先的基准测试。',
+	},
+	{
+		title: '优化研究',
+		description: '量子启发算法、组合优化、扩散过程与学习驱动的运筹优化。',
 	},
 ]
 

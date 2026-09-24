@@ -3,12 +3,21 @@ import { Image } from 'astro:assets'
 import SocialIcons from '@/components/ui/SocialIcons.astro'
 import { withBase } from '@/lib/paths'
 
-const { fullName, title, institute, location, intro, profilePicture } = Astro.props
+const {
+	fullName,
+	title,
+	institute,
+	location,
+	intro,
+	profilePicture,
+	locale = 'en',
+} = Astro.props
+const isZh = locale === 'zh'
 ---
 
 <div class='grid w-full gap-8 md:grid-cols-[minmax(0,1fr)_13rem] md:items-center lg:gap-14'>
 	<div>
-		<p class='section-kicker mb-4'>Researcher and open-source builder</p>
+		<p class='section-kicker mb-4'>{isZh ? '研究者 · 开源实践者' : 'Researcher and open-source builder'}</p>
 		<h1 class='max-w-3xl font-serif text-4xl font-bold leading-tight text-balance sm:text-5xl'>
 			{fullName}
 		</h1>
@@ -16,15 +25,15 @@ const { fullName, title, institute, location, intro, profilePicture } = Astro.pr
 		<p class='mt-2 text-sm font-medium text-primary'>{institute} / {location}</p>
 		<p class='mt-7 max-w-2xl text-lg leading-8 text-base-content/80'>{intro}</p>
 		<div class='mt-8 flex flex-wrap items-center gap-3'>
-			<a href={withBase('/projects')} class='btn btn-primary'>Explore projects</a>
-			<a href={withBase('/research')} class='btn btn-ghost border border-base-300'>Research interests</a>
+			<a href={withBase(isZh ? '/zh/projects' : '/projects')} class='btn btn-primary'>{isZh ? '浏览项目' : 'Explore projects'}</a>
+			<a href={withBase(isZh ? '/zh/research' : '/research')} class='btn btn-ghost border border-base-300'>{isZh ? '了解研究方向' : 'Research interests'}</a>
 			<SocialIcons />
 		</div>
 	</div>
 	<div class='order-first md:order-none'>
 		<Image
 			src={profilePicture}
-			alt={`Portrait of ${fullName}`}
+			alt={isZh ? `${fullName}的个人照片` : `Portrait of ${fullName}`}
 			width={416}
 			height={416}
 			class='size-28 rounded-md object-cover ring-1 ring-base-300 sm:size-36 md:size-52'

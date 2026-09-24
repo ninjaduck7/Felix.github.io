@@ -5,13 +5,13 @@ import type { CollectionEntry } from 'astro:content'
 import type { GetStaticPaths } from 'astro'
 
 export const getStaticPaths = (async () => {
-    const blogEntries = await getCollection('blog', ({ data }) => !data.draft && data.locale === 'en');
+    const blogEntries = await getCollection('blog', ({ data }) => !data.draft && data.locale === 'zh');
 
     const posts = blogEntries
         .map(post => {
         const slug = post.id
             return {
-            params: { slug },
+            params: { slug: slug.replace(/-zh$/, '') },
             props: { post },
             }
     })
@@ -49,7 +49,7 @@ const { Content } = await render(post);
 							></path>
 						</svg>
 						{
-							new Date(date).toLocaleDateString('en-US', {
+							new Date(date).toLocaleDateString('zh-CN', {
 								year: 'numeric',
 								month: 'long',
 								day: 'numeric',

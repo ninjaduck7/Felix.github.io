@@ -4,39 +4,43 @@ import { getCollection } from 'astro:content'
 import ProfilePicture from '@/assets/profile-picture.png'
 import SocialIcons from '@/components/ui/SocialIcons.astro'
 import DarkLightController from '@/components/ui/DarkLightController.astro'
-import { profile } from '@/settings'
-import { withBase } from '@/lib/paths'
+import LanguageSwitch from '@/components/ui/LanguageSwitch.astro'
+import { profile, profileZh } from '@/settings'
+import { getLocale, localizedPath } from '@/lib/i18n'
 
 const isBlogPopulated = await getCollection('blog', ({ data }) => !data.draft).then((collection) => collection.length > 0)
+const locale = getLocale(Astro.url.pathname)
+const isZh = locale === 'zh'
+const currentProfile = isZh ? profileZh : profile
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/'
 const navItems = [
-	{ label: 'Home', path: '/' },
-	{ label: 'Research', path: '/research' },
-	{ label: 'Publications', path: '/papers' },
-	{ label: 'Projects', path: '/projects' },
-	{ label: 'CV', path: '/cv' },
-	...(isBlogPopulated ? [{ label: 'Notes', path: '/blog/1' }] : []),
+	{ label: isZh ? '首页' : 'Home', path: '/' },
+	{ label: isZh ? '研究' : 'Research', path: '/research' },
+	{ label: isZh ? '论文' : 'Publications', path: '/papers' },
+	{ label: isZh ? '项目' : 'Projects', path: '/projects' },
+	{ label: isZh ? '简历' : 'CV', path: '/cv' },
+	...(isBlogPopulated ? [{ label: isZh ? '笔记' : 'Notes', path: isZh ? '/blog/1' : '/blog/1' }] : []),
 ]
 ---
 
 <aside class='flex h-screen w-[18rem] flex-col border-r border-base-300 bg-base-200 px-6 py-7 text-base-content'>
 	<div class='flex min-h-0 flex-1 flex-col'>
-		<a href={withBase('/')} class='group block'>
+		<a href={localizedPath('/', locale)} class='group block'>
 			<Image
 				class='size-24 rounded-md object-cover ring-1 ring-base-300 transition group-hover:ring-primary'
 				src={ProfilePicture}
 				width={192}
 				height={192}
-				alt={`Portrait of ${profile.fullName}`}
+				alt={isZh ? `${currentProfile.fullName}的个人照片` : `Portrait of ${currentProfile.fullName}`}
 			/>
-			<p class='mt-5 font-serif text-2xl font-bold leading-tight'>{profile.fullName}</p>
-			<p class='mt-2 text-sm leading-6 text-base-content/70'>{profile.title}</p>
+			<p class='mt-5 font-serif text-2xl font-bold leading-tight'>{currentProfile.fullName}</p>
+			<p class='mt-2 text-sm leading-6 text-base-content/70'>{currentProfile.title}</p>
 		</a>
 
-		<nav class='mt-9 min-h-0 overflow-y-auto' aria-label='Primary navigation'>
+		<nav class='mt-9 min-h-0 overflow-y-auto' aria-label={isZh ? '主导航' : 'Primary navigation'}>
 			<ul class='menu w-full gap-1 p-0'>
 				{navItems.map((item) => {
-					const href = withBase(item.path)
+					const href = localizedPath(item.path, locale)
 					const normalizedHref = href.replace(/\/$/, '')
 					const isActive = item.path === '/'
 						? currentPath === normalizedHref
@@ -63,8 +67,11 @@ const navItems = [
 
 	<div class='border-t border-base-300 pt-5'>
 		<div class='mb-4 flex items-center justify-between'>
-			<span class='font-mono text-xs uppercase text-base-content/60'>Beijing, China</span>
-			<div class='hidden lg:block'><DarkLightController /></div>
+			<span class='font-mono text-xs uppercase text-base-content/60'>{currentProfile.location}</span>
+			<div class='hidden items-center gap-2 lg:flex'>
+				<LanguageSwitch />
+				<DarkLightController />
+			</div>
 		</div>
 		<SocialIcons />
 	</div>

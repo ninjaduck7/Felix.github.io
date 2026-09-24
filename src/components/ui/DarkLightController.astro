@@ -1,15 +1,19 @@
 ---
 import { template } from '@/settings'
+import { getLocale } from '@/lib/i18n'
+
+const locale = getLocale(Astro.url.pathname)
+const label = locale === 'zh' ? '切换明暗主题' : 'Toggle color theme'
 ---
 
-<label class='btn btn-square btn-ghost btn-sm swap swap-rotate' title='Toggle color theme'>
+<label class='btn btn-square btn-ghost btn-sm swap swap-rotate' title={label}>
 	<input
 		type='checkbox'
 		class='theme-controller'
 		value={template.darkTheme}
 		data-light-theme={template.lightTheme}
 		data-dark-theme={template.darkTheme}
-		aria-label='Toggle dark mode'
+		aria-label={label}
 	/>
 	<svg class='swap-off size-5 fill-current' viewBox='0 0 24 24' aria-hidden='true'>
 		<path d='M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12Zm0-16h1v3h-2V2h1Zm0 17h1v3h-2v-3ZM2 11h3v2H2v-2Zm17 0h3v2h-3v-2ZM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42-2.12-2.12Zm12.02 12.02 1.42-1.42 2.12 2.12-1.42 1.42-2.12-2.12ZM18.36 4.22l1.42 1.42-2.12 2.12-1.42-1.42 2.12-2.12ZM6.34 16.24l1.42 1.42-2.12 2.12-1.42-1.42 2.12-2.12Z'></path>

@@ -1,0 +1,73 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import { educationZh, experiences, publications, skillsZh } from '@/data/cv'
+
+const sections = [
+	{ label: '教育经历', count: educationZh.length },
+	{ label: '研究经历', count: experiences.length },
+	{ label: '学术论文', count: publications.length },
+]
+---
+
+<Layout title='简历 | Yufei Zhang' description='Yufei Zhang 的学术简历。'>
+	<header class='max-w-3xl border-b border-base-300 pb-10'>
+		<p class='section-kicker mb-4'>学术简历</p>
+		<h1 class='font-serif text-4xl font-bold sm:text-5xl'>Yufei Zhang</h1>
+		<p class='mt-6 text-lg leading-8 text-base-content/75'>
+			北京理工大学物理学博士研究生，研究方向包括量子启发算法、组合优化、随机扩散过程与学习驱动的运筹优化。
+		</p>
+	</header>
+
+	<div class='grid gap-12 py-12 lg:grid-cols-[minmax(0,1fr)_15rem]'>
+		<div class='space-y-14'>
+			<section aria-labelledby='education-heading'>
+				<h2 id='education-heading' class='font-serif text-2xl font-bold'>教育经历</h2>
+				<div class='mt-6 divide-y divide-base-300 border-y border-base-300'>
+					{educationZh.map((item) => (
+						<article class='grid gap-3 py-6 sm:grid-cols-[9rem_minmax(0,1fr)]'>
+							<time class='font-mono text-xs text-primary'>{item.time}</time>
+							<div>
+								<h3 class='font-serif text-xl font-bold'>{item.school}</h3>
+								<p class='mt-1 font-medium'>{item.degree}</p>
+								<p class='mt-2 text-sm text-base-content/60'>{item.location}</p>
+							</div>
+						</article>
+					))}
+				</div>
+			</section>
+
+			<section aria-labelledby='skills-heading'>
+				<h2 id='skills-heading' class='font-serif text-2xl font-bold'>技能与方法</h2>
+				<div class='mt-6 grid gap-px overflow-hidden rounded-md border border-base-300 bg-base-300 sm:grid-cols-2'>
+					{skillsZh.map((skill) => (
+						<article class='bg-base-100 p-6'>
+							<h3 class='font-serif text-lg font-bold'>{skill.title}</h3>
+							<p class='mt-2 leading-7 text-base-content/75'>{skill.description}</p>
+						</article>
+					))}
+				</div>
+			</section>
+
+			{experiences.length === 0 && (
+				<section class='border-l-2 border-accent pl-6'>
+					<h2 class='font-serif text-xl font-bold'>待补充的简历信息</h2>
+					<p class='mt-3 leading-7 text-base-content/75'>
+						研究任职、奖项、学术报告与服务经历将在核实后补充，未经确认的信息不会暂作填充。
+					</p>
+				</section>
+			)}
+		</div>
+
+		<aside class='lg:border-l lg:border-base-300 lg:pl-7'>
+			<p class='section-kicker mb-4'>概览</p>
+			<dl class='space-y-4'>
+				{sections.map((section) => (
+					<div class='flex items-center justify-between gap-4 border-b border-base-300 pb-3'>
+						<dt>{section.label}</dt>
+						<dd class='font-mono text-sm text-primary'>{section.count}</dd>
+					</div>
+				))}
+			</dl>
+		</aside>
+	</div>
+</Layout>

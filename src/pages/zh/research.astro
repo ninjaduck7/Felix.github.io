@@ -1,0 +1,47 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import { profileZh } from '@/settings'
+---
+
+<Layout
+	title='研究 | Yufei Zhang'
+	description='Yufei Zhang 的研究方向：量子启发算法、组合优化、随机扩散过程与学习驱动的运筹优化。'
+>
+	<header class='max-w-3xl border-b border-base-300 pb-10'>
+		<p class='section-kicker mb-4'>学术研究</p>
+		<h1 class='font-serif text-4xl font-bold sm:text-5xl'>以严谨证据为基础的算法研究</h1>
+		<p class='mt-6 text-lg leading-8 text-base-content/75'>
+			我关注计算物理、优化与高性能计算的交叉问题，强调从数学目标、算法实现到基线、测量和结果解读的全流程可审核性。
+		</p>
+	</header>
+
+	<section class='py-12' aria-labelledby='areas-heading'>
+		<h2 id='areas-heading' class='font-serif text-3xl font-bold'>研究方向</h2>
+		<div class='mt-8 divide-y divide-base-300 border-y border-base-300'>
+			{profileZh.research_areas.map((area, index) => (
+				<article class='grid gap-4 py-8 md:grid-cols-[4rem_14rem_minmax(0,1fr)]'>
+					<p class='font-mono text-xs font-bold text-primary'>0{index + 1}</p>
+					<h3 class='font-serif text-xl font-bold'>{area.title}</h3>
+					<p class='leading-7 text-base-content/75'>{area.description}</p>
+				</article>
+			))}
+		</div>
+	</section>
+
+	<section class='grid gap-8 border-t border-base-300 py-12 md:grid-cols-2'>
+		<div>
+			<p class='section-kicker mb-3'>方法</p>
+			<h2 class='font-serif text-2xl font-bold'>正确性先于性能比较</h2>
+			<p class='mt-4 leading-7 text-base-content/75'>
+				改进实现与参考实现应接收完全一致的输入。数值容差、编译边界、预热、计时方式和硬件环境，都应与结果一同记录。
+			</p>
+		</div>
+		<div>
+			<p class='section-kicker mb-3'>解读</p>
+			<h2 class='font-serif text-2xl font-bold'>结论的边界由证据决定</h2>
+			<p class='mt-4 leading-7 text-base-content/75'>
+				求解器耗时不等于系统端到端延迟；一个优秀的优化模块，也不自动意味着整体系统达到最先进水平。我会始终明确这些边界。
+			</p>
+		</div>
+	</section>
+</Layout>

@@ -1,6 +1,7 @@
 ---
 import { template } from '@/settings'
 import { withBase } from '@/lib/paths'
+import { alternatePath, getLocale, hasTranslation } from '@/lib/i18n'
 
 interface Props {
 	title: string
@@ -9,8 +10,12 @@ interface Props {
 }
 
 const { title, description, image } = Astro.props
+const locale = getLocale(Astro.url.pathname)
+const isTranslated = hasTranslation(Astro.url.pathname)
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 const socialImage = new URL(image, Astro.site)
+const englishURL = new URL(alternatePath(Astro.url.pathname, 'en'), Astro.site)
+const chineseURL = new URL(alternatePath(Astro.url.pathname, 'zh'), Astro.site)
 ---
 
 <meta charset='utf-8' />
@@ -21,6 +26,9 @@ const socialImage = new URL(image, Astro.site)
 <link rel='alternate' type='application/rss+xml' title={`${title} RSS`} href={withBase('/rss.xml')} />
 <link rel='sitemap' href={withBase('/sitemap-index.xml')} />
 <link rel='canonical' href={canonicalURL} />
+{isTranslated && <link rel='alternate' hreflang='en' href={englishURL} />}
+{isTranslated && <link rel='alternate' hreflang='zh-CN' href={chineseURL} />}
+{isTranslated && <link rel='alternate' hreflang='x-default' href={englishURL} />}
 
 <title>{title}</title>
 <meta name='title' content={title} />
@@ -32,6 +40,7 @@ const socialImage = new URL(image, Astro.site)
 <meta property='og:description' content={description} />
 <meta property='og:image' content={socialImage} />
 <meta property='og:site_name' content='Yufei Zhang' />
+<meta property='og:locale' content={locale === 'zh' ? 'zh_CN' : 'en_US'} />
 
 <meta name='twitter:card' content='summary' />
 <meta name='twitter:title' content={title} />

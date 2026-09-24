@@ -6,8 +6,8 @@
 }
 
 @theme {
-	--font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
-	--font-serif: "Source Serif 4", Georgia, serif;
+	--font-sans: Inter, "PingFang SC", "Microsoft YaHei", ui-sans-serif, system-ui, sans-serif;
+	--font-serif: "Source Serif 4", "Noto Serif CJK SC", "Songti SC", Georgia, serif;
 	--font-mono: "IBM Plex Mono", ui-monospace, monospace;
 }
 

@@ -25,13 +25,28 @@ npm run preview
 
 Astro serves the project under its configured base path. During development, open the URL printed by Astro, normally `http://localhost:4321/Felix.github.io/`.
 
+## Languages
+
+The site is bilingual. English is the default language and Simplified Chinese is available under `/zh/`.
+
+- English: `http://localhost:4321/Felix.github.io/`
+- 中文: `http://localhost:4321/Felix.github.io/zh/`
+- The language switch preserves the current section, such as `/research` and `/zh/research`.
+- Canonical, `hreflang`, Open Graph locale, and document language metadata are generated for both versions.
+
+Shared identity and translated research content live in `src/settings.ts`. Chinese page copy lives in `src/pages/zh/`; bilingual CV and project data live in `src/data/`.
+
 ## Content map
 
 - Site identity, social links, research areas, SEO, and base path: `src/settings.ts`
 - Education, skills, experience, and publications: `src/data/cv.ts`
 - Public repositories: `src/data/projects.ts`
 - Pages: `src/pages/`
+- Chinese pages: `src/pages/zh/`
+- Locale routing helpers: `src/lib/i18n.ts`
 - Optional research notes: `src/content/BlogPosts/`
+- TensorCircuit-NG contribution details are linked directly from the Projects page (PRs #131 and #132).
+- Notes are published as paired English and Chinese entries under `src/content/BlogPosts/` and `/blog/` or `/zh/blog/`.
 - Profile image: `src/assets/profile-picture.png`
 
 The Notes navigation item appears only when at least one Markdown file exists in `src/content/BlogPosts/`.

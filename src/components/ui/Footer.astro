@@ -1,11 +1,16 @@
 ---
-import { profile } from '@/settings'
+import { profile, profileZh } from '@/settings'
+import { getLocale } from '@/lib/i18n'
+
+const locale = getLocale(Astro.url.pathname)
+const isZh = locale === 'zh'
+const currentProfile = isZh ? profileZh : profile
 ---
 
 <footer class='mt-20 flex flex-col gap-3 border-t border-base-300 py-8 text-sm text-base-content/65 sm:flex-row sm:items-center sm:justify-between'>
-	<p>&copy; {new Date().getFullYear()} {profile.fullName}</p>
+	<p>&copy; {new Date().getFullYear()} {currentProfile.fullName}</p>
 	<p>
-		Built with{' '}<a href='https://astro.build' class='font-medium text-base-content hover:text-primary' target='_blank' rel='noreferrer'>Astro</a>{' '}
-		from the{' '}<a href='https://github.com/maiobarbero/astro_academia' class='font-medium text-base-content hover:text-primary' target='_blank' rel='noreferrer'>Astro Academia</a>{' '}baseline.
+		{isZh ? '基于 ' : 'Built with '}<a href='https://astro.build' class='font-medium text-base-content hover:text-primary' target='_blank' rel='noreferrer'>Astro</a>{' '}
+		{isZh ? '构建，设计源自 ' : 'from the '}<a href='https://github.com/maiobarbero/astro_academia' class='font-medium text-base-content hover:text-primary' target='_blank' rel='noreferrer'>Astro Academia</a>{isZh ? '。' : ' baseline.'}
 	</p>
 </footer>

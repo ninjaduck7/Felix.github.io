@@ -4,19 +4,16 @@ import { projects } from '@/data/projects'
 import { withBase } from '@/lib/paths'
 ---
 
-<Layout
-	title='Projects | Yufei Zhang'
-	description='Open-source physics, quantum computing, mathematics, and software projects by Yufei Zhang.'
->
+<Layout title='项目 | Yufei Zhang' description='Yufei Zhang 在物理、量子计算、数学与科学软件方向的开源项目。'>
 	<header class='max-w-3xl border-b border-base-300 pb-10'>
-		<p class='section-kicker mb-4'>Open source</p>
-		<h1 class='font-serif text-4xl font-bold sm:text-5xl'>Projects</h1>
+		<p class='section-kicker mb-4'>开源实践</p>
+		<h1 class='font-serif text-4xl font-bold sm:text-5xl'>项目</h1>
 		<p class='mt-6 text-lg leading-8 text-base-content/75'>
-			This page lists selected public projects with verified titles, descriptions, links, and current project information.
+			本页只收录项目名称、简介、原始链接与当前项目信息均已核实的公开项目。
 		</p>
 	</header>
 
-	<section class='divide-y divide-base-300' aria-label='Project list'>
+	<section class='divide-y divide-base-300' aria-label='项目列表'>
 		{projects.map((project, index) => (
 			<article class='grid gap-5 py-9 md:grid-cols-[3rem_minmax(0,1fr)_10rem]'>
 				<p class='font-mono text-xs font-bold text-primary'>0{index + 1}</p>
@@ -24,21 +21,21 @@ import { withBase } from '@/lib/paths'
 					<h2 class='font-serif text-2xl font-bold'>
 						<a href={project.href} target='_blank' rel='noreferrer' class='hover:text-primary'>{project.name}</a>
 					</h2>
-					<p class='mt-3 max-w-3xl leading-7 text-base-content/75'>{project.description}</p>
-					<ul class='mt-5 flex flex-wrap gap-2' aria-label={`Topics for ${project.name}`}>
-						{project.tags.map((tag) => <li class='badge badge-outline rounded'>{tag}</li>)}
+					<p class='mt-3 max-w-3xl leading-7 text-base-content/75'>{project.descriptionZh}</p>
+					<ul class='mt-5 flex flex-wrap gap-2' aria-label={`${project.name} 的主题`}>
+						{project.tagsZh.map((tag) => <li class='badge badge-outline rounded'>{tag}</li>)}
 					</ul>
 					{project.details && <div class='mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm'>
-						{project.details.map((detail) => <a href={detail.href} target='_blank' rel='noreferrer' class='text-primary underline-offset-4 hover:underline'>{detail.label}</a>)}
+						{project.details.map((detail) => <a href={detail.href} target='_blank' rel='noreferrer' class='text-primary underline-offset-4 hover:underline'>{detail.labelZh}</a>)}
 					</div>}
 				</div>
 				<div class='md:text-right'>
 					<p class='font-mono text-xs text-base-content/60'>{project.language}</p>
-					{project.notePath && <a href={withBase(project.notePath)} class='btn btn-ghost btn-sm mt-4 border border-base-300' aria-label={`Read notes about ${project.name}`} title='Read project notes'>
+					{project.notePath && <a href={withBase(`/zh${project.notePath}`)} class='btn btn-ghost btn-sm mt-4 border border-base-300' aria-label={`阅读${project.name}的项目笔记`} title='阅读项目笔记'>
 						<svg viewBox='0 0 24 24' class='size-4' fill='none' stroke='currentColor' stroke-width='1.8' aria-hidden='true'><path stroke-linecap='round' stroke-linejoin='round' d='M7 3.75h7.5L19 8.25v12A1.75 1.75 0 0117.25 22h-10A1.75 1.75 0 015.5 20.25v-14A2.5 2.5 0 017 3.75z' /><path stroke-linecap='round' stroke-linejoin='round' d='M14.5 3.75v4.5H19M8.5 12h7M8.5 15.5h7' /></svg>
-						<span>Notes</span>
+						<span>项目笔记</span>
 					</a>}
-					<a href={project.href} target='_blank' rel='noreferrer' class='btn btn-ghost btn-sm mt-4 border border-base-300'>Repository</a>
+					<a href={project.href} target='_blank' rel='noreferrer' class='btn btn-ghost btn-sm mt-4 border border-base-300'>查看仓库</a>
 				</div>
 			</article>
 		))}
